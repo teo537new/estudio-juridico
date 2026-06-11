@@ -1,7 +1,8 @@
 "use client"
 
 import { useState } from "react"
-import { enviarContacto } from "./actions.tsx"
+import { enviarContacto } from "./actions"
+
 
 export default function FormularioContacto() {
   const [enviado, setEnviado] = useState(false)
