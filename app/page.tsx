@@ -12,7 +12,8 @@ export default function Home() {
       <Carrusel />
 
       <section className="py-12 px-8 text-center bg-gray-50">
-        <h1 className="text-4xl font-bold text-[#1a1a2e]">Estudio Jurídico</h1>
+        
+        <h1 className="text-4xl font-bold text-[#1a1a2e] font-[var(--font-playfair)]">Estudio Jurídico</h1>
         <p className="max-w-xl mx-auto mt-4 text-lg text-gray-600">
           Más de 20 años de experiencia asesorando a personas y empresas en derecho civil, comercial y laboral.
           Nuestro compromiso es brindar soluciones legales claras y efectivas.

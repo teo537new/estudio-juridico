@@ -1,36 +1,46 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 const imagenes = [
-  { src: "https://picsum.photos/800/400?random=1", alt: "Imagen 1" },
-  { src: "https://picsum.photos/800/400?random=2", alt: "Imagen 2" },
-  { src: "https://picsum.photos/800/400?random=3", alt: "Imagen 3" },
+  { src: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=900&h=400&fit=crop", alt: "Abogados" },
+  { src: "https://images.unsplash.com/photo-1521791136064-7986c2920216?w=900&h=400&fit=crop", alt: "Justicia" },
+  { src: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=900&h=400&fit=crop", alt: "Oficina" },
 ]
 
 export default function Carrusel() {
   const [actual, setActual] = useState(0)
+  const [opacidad, setOpacidad] = useState(1)
 
-  function anterior() {
-    setActual(actual === 0 ? imagenes.length - 1 : actual - 1)
-  }
-
-  function siguiente() {
-    setActual(actual === imagenes.length - 1 ? 0 : actual + 1)
-  }
+  useEffect(() => {
+    const intervalo = setInterval(() => {
+      setOpacidad(0)
+      setTimeout(() => {
+        setActual(prev => prev === imagenes.length - 1 ? 0 : prev + 1)
+        setOpacidad(1)
+      }, 500)
+    }, 4000)
+    return () => clearInterval(intervalo)
+  }, [])
 
   return (
-    
-    <div style={{ position: "relative", textAlign: "center", margin: "2rem auto", maxWidth: "800px" }}>
-      <img
-        src={imagenes[actual].src}
-        alt={imagenes[actual].alt}
-        style={{ width: "100%", maxWidth: "800px", height: "400px", objectFit: "cover" }}
-      />
-      <div style={{ marginTop: "1rem", display: "flex", justifyContent: "center", gap: "1rem" }}>
-        <button onClick={anterior} style={{ padding: "0.5rem 1.5rem", cursor: "pointer" }}>← Anterior</button>
-        <span>{actual + 1} / {imagenes.length}</span>
-        <button onClick={siguiente} style={{ padding: "0.5rem 1.5rem", cursor: "pointer" }}>Siguiente →</button>
+    <div className="max-w-4xl mx-auto my-8 px-4">
+      <div className="overflow-hidden rounded-lg shadow-lg">
+        <img
+          src={imagenes[actual].src}
+          alt={imagenes[actual].alt}
+          className="w-full h-72 object-cover"
+          style={{ opacity: opacidad, transition: "opacity 0.5s ease" }}
+        />
+      </div>
+      <div className="flex justify-center gap-2 py-3">
+        {imagenes.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setActual(i)}
+            className={`w-3 h-3 rounded-full ${i === actual ? "bg-[#1a1a2e]" : "bg-gray-300"}`}
+          />
+        ))}
       </div>
     </div>
   )
